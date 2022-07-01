@@ -42,6 +42,7 @@ require_once(dirname(__FILE__).'/logging.php');
 require_once(dirname(__FILE__).'/slack-common-functions.php');
 require_once(dirname(__FILE__).'/slack-sample-reaction-added.php');
 require_once(dirname(__FILE__).'/slack-sample-workflow.php');
+require_once(dirname(__FILE__).'/slack-sample-shortcut-modal.php');
 
 logInfo(THIS_NAME." start");
 if (IS_DEBUG_MODE) logInfo("URL is \n".$_SERVER['REQUEST_URI']);
@@ -88,5 +89,15 @@ if ($incomingEventType === 'action' || $incomingEventType === 'viewaction') {
         $response = slack_sample_workflow_save(SLACK_AUTHZ_TOKEN, $requestDto, $incomingPayload);
         logInfo($response);
     }
+    if ($incomingPayload['type'] === 'modal') {
+        $response = slack_sample_shortcut_modal_save(SLACK_AUTHZ_TOKEN, $requestDto, $incomingPayload);
+        logInfo($response);
+    }
 }
+
+if ($incomingEventType === 'shortcut') {
+    $response = slack_sample_shortcut_modal(SLACK_AUTHZ_TOKEN, $requestDto, $incomingPayload);
+    logInfo($response);
+}
+
 logInfo(THIS_NAME." end");

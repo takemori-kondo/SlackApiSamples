@@ -89,6 +89,9 @@ if ($incomingEventType === 'action' || $incomingEventType === 'viewaction') {
         $response = slack_sample_workflow_save(SLACK_AUTHZ_TOKEN, $requestDto, $incomingPayload);
         logInfo($response);
     }
+    if ($incomingPayload['type'] === 'button') {
+        logInfo('button clicked!');
+    }
     if ($incomingPayload['type'] === 'modal') {
         $response = slack_sample_shortcut_modal_save(SLACK_AUTHZ_TOKEN, $requestDto, $incomingPayload);
         logInfo($response);
